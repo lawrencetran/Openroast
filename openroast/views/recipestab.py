@@ -6,8 +6,8 @@ import json
 import time
 import webbrowser
 
-from PyQt5 import QtCore
-from PyQt5 import QtWidgets
+from PyQt6 import QtCore
+from PyQt6 import QtWidgets
 
 from openroast.views import customqtwidgets
 from openroast.views import recipeeditorwindow
@@ -46,7 +46,7 @@ class RecipesTab(QtWidgets.QWidget):
         # Create label to cover recipe info.
         self.selectionLabel = QtWidgets.QLabel()
         self.selectionLabel.setObjectName("recipeSelectionLabel")
-        self.selectionLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.selectionLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.layout.addWidget(self.selectionLabel, 0, 1)
 
         # Set main layout for widget.
@@ -63,7 +63,7 @@ class RecipesTab(QtWidgets.QWidget):
         browser = QtWidgets.QTreeView()
         browser.setModel(self.model)
         browser.setRootIndex(self.model.index(os.path.expanduser('~/Documents/Openroast/Recipes/')))
-        browser.setFocusPolicy(QtCore.Qt.NoFocus)
+        browser.setFocusPolicy(QtCore.Qt.FocusPolicy.NoFocus)
         browser.header().close()
 
         browser.setAnimated(True)
@@ -105,9 +105,9 @@ class RecipesTab(QtWidgets.QWidget):
         self.stepsTable.setShowGrid(False)
         self.stepsTable.setAlternatingRowColors(True)
         self.stepsTable.setCornerButtonEnabled(False)
-        self.stepsTable.horizontalHeader().setSectionResizeMode(1)
-        self.stepsTable.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
-        self.stepsTable.setSelectionMode(QtWidgets.QAbstractItemView.NoSelection)
+        self.stepsTable.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.ResizeMode.Interactive)
+        self.stepsTable.setEditTriggers(QtWidgets.QAbstractItemView.EditTrigger.NoEditTriggers)
+        self.stepsTable.setSelectionMode(QtWidgets.QAbstractItemView.SelectionMode.NoSelection)
 
         # Assign Object Names for qss
         self.nameLabel.setObjectName("RecipeName")
@@ -147,7 +147,7 @@ class RecipesTab(QtWidgets.QWidget):
 
         # Add spacer.
         self.spacer = QtWidgets.QWidget()
-        self.spacer.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        self.spacer.setSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding)
         buttonsLayout.addWidget(self.spacer)
 
         self.roastButton.clicked.connect(self.load_recipe)
@@ -247,9 +247,9 @@ class RecipesTab(QtWidgets.QWidget):
                 sectionTempWidget.setText("Cooling")
 
             # Set widget cell alignment.
-            sectionTempWidget.setTextAlignment(QtCore.Qt.AlignCenter)
-            sectionFanSpeedWidget.setTextAlignment(QtCore.Qt.AlignCenter)
-            sectionTimeWidget.setTextAlignment(QtCore.Qt.AlignCenter)
+            sectionTempWidget.setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+            sectionFanSpeedWidget.setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+            sectionTimeWidget.setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
 
             # Add widgets
             self.stepsTable.setItem(row, 0, sectionTempWidget)
@@ -272,7 +272,7 @@ class RecipesTab(QtWidgets.QWidget):
     def open_recipe_editor(self):
         """Method used to open Recipe Editor Window with an existing recipe."""
         self.editorWindow = recipeeditorwindow.RecipeEditor(recipeLocation = self.currentlySelectedRecipePath)
-        self.editorWindow.exec_()
+        self.editorWindow.exec()
 
         # Used to update the recipe in the recipes tab after editing
         self.load_recipe_file(self.selectedFilePath)
@@ -281,7 +281,7 @@ class RecipesTab(QtWidgets.QWidget):
     def create_new_recipe(self):
         """Method used to open Recipe Editor Window for a new recipe."""
         self.editorWindow = recipeeditorwindow.RecipeEditor()
-        self.editorWindow.exec_()
+        self.editorWindow.exec()
 
         # Used to update the recipe in the recipes tab after creation
         try:

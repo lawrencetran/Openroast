@@ -5,11 +5,12 @@ import os
 import json
 import datetime
 
-from PyQt5 import QtCore
-from PyQt5 import QtWidgets
+from PyQt6 import QtCore
+from PyQt6 import QtWidgets
+from PyQt6 import QtGui
 
 import matplotlib
-matplotlib.use('Qt5Agg')
+matplotlib.use('QtAgg')
 # import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 import matplotlib.animation as animation
@@ -155,7 +156,7 @@ class TimeEditNoWheel(QtWidgets.QTimeEdit):
         event.ignore()
 
 
-class RecipeModel(QtWidgets.QFileSystemModel):
+class RecipeModel(QtGui.QFileSystemModel):
     """A Subclass of QFileSystemModel to add a column."""
     def __init__(self, *args, **kwargs):
         super(RecipeModel, self).__init__()
@@ -165,7 +166,7 @@ class RecipeModel(QtWidgets.QFileSystemModel):
 
     def data(self, index, role):
         if index.column() == self.columnCount() - 1:
-            if role == QtCore.Qt.DisplayRole:
+            if role == QtCore.Qt.ItemDataRole.DisplayRole:
                 filePath = self.filePath(index)
                 if os.path.isfile(filePath):
                     with open(filePath) as json_data:
@@ -179,7 +180,7 @@ class RecipeModel(QtWidgets.QFileSystemModel):
         return super(RecipeModel, self).data(index, role)
 
 
-class LogModel(QtWidgets.QFileSystemModel):
+class LogModel(QtGui.QFileSystemModel):
     """A Subclass of QFileSystemModel to add a column."""
     def __init__(self, *args, **kwargs):
         super(LogModel, self).__init__()
@@ -189,7 +190,7 @@ class LogModel(QtWidgets.QFileSystemModel):
 
     def data(self, index, role):
         if index.column() == self.columnCount() - 1:
-            if role == Qt.DisplayRole:
+            if role == QtCore.Qt.ItemDataRole.DisplayRole:
                 filePath = self.filePath(index)
                 if os.path.isfile(filePath):
                     with open(filePath) as json_data:

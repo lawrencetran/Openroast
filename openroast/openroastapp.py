@@ -7,9 +7,9 @@ import shutil
 import logging
 import pathlib
 import multiprocessing
-from PyQt5 import QtWidgets
-from PyQt5 import QtGui
-from PyQt5 import QtCore
+from PyQt6 import QtWidgets
+from PyQt6 import QtGui
+from PyQt6 import QtCore
 
 MOCK_HARDWARE = False
 if not MOCK_HARDWARE:
@@ -113,7 +113,7 @@ class OpenroastApp(object):
             self.recipes,
             self.roaster)
         self.window.show()
-        sys.exit(self.app.exec_())
+        sys.exit(self.app.exec())
 
 
 # def get_script_dir(follow_symlinks=True):

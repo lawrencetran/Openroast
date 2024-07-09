@@ -7,8 +7,8 @@ import math
 import datetime
 from multiprocessing import sharedctypes
 
-from PyQt5 import QtCore
-from PyQt5 import QtWidgets
+from PyQt6 import QtCore
+from PyQt6 import QtWidgets
 
 from openroast.views import customqtwidgets
 
@@ -67,12 +67,12 @@ class RoastTab(QtWidgets.QWidget):
 
         # Create progress bar.
         self.progressBar = self.create_progress_bar()
-        self.layout.addLayout(self.progressBar, 1, 0, 1, 2, QtCore.Qt.AlignCenter)
+        self.layout.addLayout(self.progressBar, 1, 0, 1, 2, QtCore.Qt.AlignmentFlag.AlignCenter)
 
         # Create not connected label.
         self.connectionStatusLabel = QtWidgets.QLabel(self.CONNECT_TXT_PLEASE_CONNECT)
         self.connectionStatusLabel.setObjectName("connectionStatus")
-        self.connectionStatusLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.connectionStatusLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.layout.addWidget(self.connectionStatusLabel, 0, 0)
 
         # Set main layout for widget.
@@ -157,7 +157,7 @@ class RoastTab(QtWidgets.QWidget):
 
         # Add a bottom spacer to keep sizing.
         spacer = QtWidgets.QWidget()
-        spacer.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        spacer.setSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding)
         rightPane.addWidget(spacer)
 
         return rightPane
@@ -182,7 +182,7 @@ class RoastTab(QtWidgets.QWidget):
                # Create label for section.
                 label = QtWidgets.QLabel(labelText)
                 label.setObjectName("progressLabel")
-                label.setAlignment(QtCore.Qt.AlignCenter)
+                label.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
                 progressBar.addWidget(label, 0, i)
 
                # Create progress bar for section.
@@ -221,7 +221,7 @@ class RoastTab(QtWidgets.QWidget):
             self.progressBar.itemAt(i).widget().setParent(None)
 
         self.progressBar = self.create_progress_bar()
-        self.layout.addLayout(self.progressBar, 1, 0, 1, 2, QtCore.Qt.AlignCenter)
+        self.layout.addLayout(self.progressBar, 1, 0, 1, 2, QtCore.Qt.AlignmentFlag.AlignCenter)
 
     def calc_display_time(self, time):
         time = time / 60
@@ -288,7 +288,7 @@ class RoastTab(QtWidgets.QWidget):
         sliderPanel.addWidget(tempSliderLabel, 0, 0)
 
         # Create temperature slider.
-        self.tempSlider = QtWidgets.QSlider(QtCore.Qt.Horizontal)
+        self.tempSlider = QtWidgets.QSlider(QtCore.Qt.Orientation.Horizontal)
         self.tempSlider.setRange(150, 550)
         self.tempSlider.valueChanged.connect(self.update_target_temp_slider)
         sliderPanel.addWidget(self.tempSlider, 1, 0)
@@ -296,11 +296,11 @@ class RoastTab(QtWidgets.QWidget):
         # Create temperature spin box.
         self.tempSpinBox = QtWidgets.QSpinBox()
         self.tempSpinBox.setObjectName("miniSpinBox")
-        self.tempSpinBox.setButtonSymbols(2)      # Remove arrows.
-        self.tempSpinBox.setAlignment(QtCore.Qt.AlignCenter)
+        self.tempSpinBox.setButtonSymbols(QtWidgets.QSpinBox.ButtonSymbols.NoButtons)      # Remove arrows.
+        self.tempSpinBox.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.tempSpinBox.setRange(150, 550)
         self.tempSpinBox.valueChanged.connect(self.update_target_temp_spin_box)
-        self.tempSpinBox.setAttribute(QtCore.Qt.WA_MacShowFocusRect, 0)
+        self.tempSpinBox.setAttribute(QtCore.Qt.WidgetAttribute.WA_MacShowFocusRect, 0)
         sliderPanel.addWidget(self.tempSpinBox, 1, 1)
 
         # Update temperature data.
@@ -311,7 +311,7 @@ class RoastTab(QtWidgets.QWidget):
         sliderPanel.addWidget(timeSliderLabel, 2, 0)
 
         # Create timer slider.
-        self.sectTimeSlider = QtWidgets.QSlider(QtCore.Qt.Horizontal)
+        self.sectTimeSlider = QtWidgets.QSlider(QtCore.Qt.Orientation.Horizontal)
         self.sectTimeSlider.setRange(0, 900)
         self.sectTimeSlider.valueChanged.connect(self.update_sect_time_slider)
         sliderPanel.addWidget(self.sectTimeSlider, 3, 0)
@@ -319,9 +319,9 @@ class RoastTab(QtWidgets.QWidget):
         # Create mini timer spin box.
         self.sectTimeSpinBox = customqtwidgets.TimeEditNoWheel()
         self.sectTimeSpinBox.setObjectName("miniSpinBox")
-        self.sectTimeSpinBox.setButtonSymbols(2)      # Remove arrows.
-        self.sectTimeSpinBox.setAlignment(QtCore.Qt.AlignCenter)
-        self.sectTimeSpinBox.setAttribute(QtCore.Qt.WA_MacShowFocusRect, 0)
+        self.sectTimeSpinBox.setButtonSymbols(QtWidgets.QSpinBox.ButtonSymbols.NoButtons)      # Remove arrows.
+        self.sectTimeSpinBox.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+        self.sectTimeSpinBox.setAttribute(QtCore.Qt.WidgetAttribute.WA_MacShowFocusRect, 0)
         self.sectTimeSpinBox.setDisplayFormat("mm:ss")
         self.sectTimeSpinBox.timeChanged.connect(self.update_sect_time_spin_box)
         sliderPanel.addWidget(self.sectTimeSpinBox, 3, 1)
@@ -331,7 +331,7 @@ class RoastTab(QtWidgets.QWidget):
         sliderPanel.addWidget(fanSliderLabel, 4, 0)
 
         # Create fan speed slider.
-        self.fanSlider = QtWidgets.QSlider(QtCore.Qt.Horizontal)
+        self.fanSlider = QtWidgets.QSlider(QtCore.Qt.Orientation.Horizontal)
         self.fanSlider.setRange(1, 9)
         self.fanSlider.valueChanged.connect(self.update_fan_speed_slider)
         sliderPanel.addWidget(self.fanSlider, 5, 0)
@@ -339,10 +339,10 @@ class RoastTab(QtWidgets.QWidget):
         # Create mini fan spin box
         self.fanSpeedSpinBox = QtWidgets.QSpinBox()
         self.fanSpeedSpinBox.setObjectName("miniSpinBox")
-        self.fanSpeedSpinBox.setButtonSymbols(2)      # Remove arrows.
+        self.fanSpeedSpinBox.setButtonSymbols(QtWidgets.QSpinBox.ButtonSymbols.NoButtons)      # Remove arrows.
         self.fanSpeedSpinBox.setRange(1, 9)
-        self.fanSpeedSpinBox.setAttribute(QtCore.Qt.WA_MacShowFocusRect, 0)
-        self.fanSpeedSpinBox.setAlignment(QtCore.Qt.AlignCenter)
+        self.fanSpeedSpinBox.setAttribute(QtCore.Qt.WidgetAttribute.WA_MacShowFocusRect, 0)
+        self.fanSpeedSpinBox.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.fanSpeedSpinBox.valueChanged.connect(self.update_fan_spin_box)
         sliderPanel.addWidget(self.fanSpeedSpinBox, 5, 1)
 
@@ -354,7 +354,7 @@ class RoastTab(QtWidgets.QWidget):
         infoBox.setSpacing(0)
         label = QtWidgets.QLabel(labelText)
         label.setObjectName("label")
-        valueLabel.setAlignment(QtCore.Qt.AlignCenter)
+        valueLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         valueLabel.setObjectName(objectName)
         infoBox.addWidget(label)
         infoBox.addWidget(valueLabel)

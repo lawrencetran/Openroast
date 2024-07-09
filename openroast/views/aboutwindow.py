@@ -6,8 +6,8 @@ import webbrowser
 import openroast.version as version
 from openroast import utils as utils
 
-from PyQt5 import QtCore
-from PyQt5 import QtWidgets
+from PyQt6 import QtCore
+from PyQt6 import QtWidgets
 
 
 class About(QtWidgets.QDialog):
@@ -17,7 +17,7 @@ class About(QtWidgets.QDialog):
         # Define main window for the application.
         self.setWindowTitle('About Openroast')
         self.setMinimumSize(600, 400)
-        self.setContextMenuPolicy(QtCore.Qt.NoContextMenu)
+        self.setContextMenuPolicy(QtCore.Qt.ContextMenuPolicy.NoContextMenu)
 
         self.create_ui()
 
@@ -28,12 +28,12 @@ class About(QtWidgets.QDialog):
 
         # openroast Label
         self.openroastLabel = QtWidgets.QLabel("openroast")
-        self.openroastLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.openroastLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.openroastLabel.setObjectName("logo")
 
         # License
         self.licenseLabel = QtWidgets.QLabel("License")
-        self.licenseLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.licenseLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         # with open('LICENSE', 'r') as file:
         #      licenseText = file.read()
         licenseText = utils.get_resource_string(
@@ -47,11 +47,11 @@ class About(QtWidgets.QDialog):
         versionLabelString = "Version " + version.__version__
         self.versionLabel = QtWidgets.QLabel(versionLabelString)
         self.versionLabel.setObjectName("versionLabel")
-        self.versionLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.versionLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
 
         # Created by
         self.authorsLabel = QtWidgets.QLabel("Authors")
-        self.authorsLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.authorsLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
 
         self.authorButton1 = QtWidgets.QPushButton("Mark Spicer")
         self.author1Link = "https://markspicer.me"

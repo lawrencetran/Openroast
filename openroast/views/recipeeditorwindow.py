@@ -6,9 +6,9 @@ import json
 import time
 import functools
 
-from PyQt5 import QtGui
-from PyQt5 import QtCore
-from PyQt5 import QtWidgets
+from PyQt6 import QtGui
+from PyQt6 import QtCore
+from PyQt6 import QtWidgets
 
 from openroast import tools
 from openroast.views import customqtwidgets
@@ -21,7 +21,7 @@ class RecipeEditor(QtWidgets.QDialog):
         # Define main window for the application.
         self.setWindowTitle('Openroast')
         self.setMinimumSize(800, 600)
-        self.setContextMenuPolicy(QtCore.Qt.NoContextMenu)
+        self.setContextMenuPolicy(QtCore.Qt.ContextMenuPolicy.NoContextMenu)
 
         self.create_ui()
 
@@ -79,13 +79,13 @@ class RecipeEditor(QtWidgets.QDialog):
         self.beanStore = QtWidgets.QLineEdit()
 
         # Remove focus from input boxes.
-        self.recipeName.setAttribute(QtCore.Qt.WA_MacShowFocusRect, 0)
-        self.recipeCreator.setAttribute(QtCore.Qt.WA_MacShowFocusRect, 0)
-        self.recipeRoastType.setAttribute(QtCore.Qt.WA_MacShowFocusRect, 0)
-        self.beanRegion.setAttribute(QtCore.Qt.WA_MacShowFocusRect, 0)
-        self.beanCountry.setAttribute(QtCore.Qt.WA_MacShowFocusRect, 0)
-        self.beanLink.setAttribute(QtCore.Qt.WA_MacShowFocusRect, 0)
-        self.beanStore.setAttribute(QtCore.Qt.WA_MacShowFocusRect, 0)
+        self.recipeName.setAttribute(QtCore.Qt.WidgetAttribute.WA_MacShowFocusRect, 0)
+        self.recipeCreator.setAttribute(QtCore.Qt.WidgetAttribute.WA_MacShowFocusRect, 0)
+        self.recipeRoastType.setAttribute(QtCore.Qt.WidgetAttribute.WA_MacShowFocusRect, 0)
+        self.beanRegion.setAttribute(QtCore.Qt.WidgetAttribute.WA_MacShowFocusRect, 0)
+        self.beanCountry.setAttribute(QtCore.Qt.WidgetAttribute.WA_MacShowFocusRect, 0)
+        self.beanLink.setAttribute(QtCore.Qt.WidgetAttribute.WA_MacShowFocusRect, 0)
+        self.beanStore.setAttribute(QtCore.Qt.WidgetAttribute.WA_MacShowFocusRect, 0)
 
         # Add objects to the inputFieldLayout
         self.inputFieldLayout.addWidget(recipeNameLabel, 0, 0)
@@ -143,7 +143,7 @@ class RecipeEditor(QtWidgets.QDialog):
 
         # Create Spacer.
         self.spacer = QtWidgets.QWidget()
-        self.spacer.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        self.spacer.setSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding)
 
         # Add widgets to the layout.
         self.bottomButtonLayout.addWidget(self.spacer)
@@ -157,8 +157,8 @@ class RecipeEditor(QtWidgets.QDialog):
         recipeStepsTable.setShowGrid(False)
         recipeStepsTable.setAlternatingRowColors(True)
         recipeStepsTable.setCornerButtonEnabled(False)
-        recipeStepsTable.horizontalHeader().setSectionResizeMode(1)
-        recipeStepsTable.setSelectionMode(QtWidgets.QAbstractItemView.NoSelection)
+        recipeStepsTable.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.ResizeMode.Interactive)
+        recipeStepsTable.setSelectionMode(QtWidgets.QAbstractItemView.SelectionMode.NoSelection)
 
         # Steps spreadsheet
         recipeStepsTable.setColumnCount(4)
@@ -214,7 +214,7 @@ class RecipeEditor(QtWidgets.QDialog):
             # Time Value
             sectionTimeWidget = customqtwidgets.TimeEditNoWheel()
             sectionTimeWidget.setObjectName("recipeEditTime")
-            sectionTimeWidget.setAttribute(QtCore.Qt.WA_MacShowFocusRect, 0)
+            sectionTimeWidget.setAttribute(QtCore.Qt.WidgetAttribute.WA_MacShowFocusRect, 0)
             sectionTimeWidget.setDisplayFormat("mm:ss")
             # Set QTimeEdit to the right time from recipe
             sectionTimeStr = time.strftime("%M:%S", time.gmtime(steps[row]["sectionTime"]))
@@ -393,7 +393,7 @@ class RecipeEditor(QtWidgets.QDialog):
             alert.setWindowTitle('openroast')
             alert.setStyleSheet(self.style)
             alert.setText("You must have atleast one step!")
-            alert.exec_()
+            alert.exec()
 
         else:
             # Delete all the current rows

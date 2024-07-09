@@ -6,9 +6,9 @@ import json
 import shutil
 import openroast
 
-from PyQt5 import QtGui
-from PyQt5 import QtCore
-from PyQt5 import QtWidgets
+from PyQt6 import QtGui
+from PyQt6 import QtCore
+from PyQt6 import QtWidgets
 
 from openroast.views import roasttab
 from openroast.views import recipestab
@@ -22,7 +22,7 @@ class MainWindow(QtWidgets.QMainWindow):
         # Define main window for the application.
         self.setWindowTitle('Openroast v%s' % __version__)
         self.setMinimumSize(800, 600)
-        self.setContextMenuPolicy(QtCore.Qt.NoContextMenu)
+        self.setContextMenuPolicy(QtCore.Qt.ContextMenuPolicy.NoContextMenu)
 
         # keep a copy of roaster & recipes, needed here
         self.roaster = roaster
@@ -41,39 +41,40 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def create_actions(self):
         # File menu actions.
-        self.clearRoastAct = QtWidgets.QAction(
+        
+        self.clearRoastAct = QtGui.QAction(
             "&Clear",
             self,
             shortcut=QtGui.QKeySequence(
-                QtCore.Qt.CTRL + QtCore.Qt.SHIFT + QtCore.Qt.Key_C),
+                QtCore.Qt.Modifier.CTRL | QtCore.Qt.Modifier.SHIFT | QtCore.Qt.Key.Key_C),
             statusTip="Clear the roast window",
             triggered=self.roast.clear_roast)
 
-        self.newRoastAct = QtWidgets.QAction("&Roast Again", self,
-            shortcut=QtGui.QKeySequence(QtCore.Qt.CTRL + QtCore.Qt.Key_R),
+        self.newRoastAct = QtGui.QAction("&Roast Again", self,
+            shortcut=QtGui.QKeySequence(QtCore.Qt.Modifier.CTRL | QtCore.Qt.Key.Key_R),
             statusTip="Roast recipe again",
             triggered=self.roast.reset_current_roast)
 
-        self.importRecipeAct = QtWidgets.QAction("&Import Recipe", self,
-            shortcut=QtGui.QKeySequence(QtCore.Qt.CTRL + QtCore.Qt.Key_I),
+        self.importRecipeAct = QtGui.QAction("&Import Recipe", self,
+            shortcut=QtGui.QKeySequence(QtCore.Qt.Modifier.CTRL | QtCore.Qt.Key.Key_I),
             statusTip="Import a recipe file",
             triggered=self.import_recipe_file)
 
-        self.exportRecipeAct = QtWidgets.QAction("&Export Recipe", self,
-            shortcut=QtGui.QKeySequence(QtCore.Qt.CTRL + QtCore.Qt.Key_E),
+        self.exportRecipeAct = QtGui.QAction("&Export Recipe", self,
+            shortcut=QtGui.QKeySequence(QtCore.Qt.Modifier.CTRL | QtCore.Qt.Key.Key_E),
             statusTip="Export a recipe file",
             triggered=self.export_recipe_file)
 
-        self.saveRoastGraphAct = QtWidgets.QAction("&Save Roast Graph", self,
-            shortcut=QtGui.QKeySequence(QtCore.Qt.CTRL + QtCore.Qt.Key_K),
+        self.saveRoastGraphAct = QtGui.QAction("&Save Roast Graph", self,
+            shortcut=QtGui.QKeySequence(QtCore.Qt.Modifier.CTRL | QtCore.Qt.Key.Key_K),
             statusTip="Save an image of the roast graph",
             triggered=self.roast.save_roast_graph)
 
-        self.saveRoastGraphCSVAct = QtWidgets.QAction("&Save Roast Graph CSV", self,
+        self.saveRoastGraphCSVAct = QtGui.QAction("&Save Roast Graph CSV", self,
             statusTip="Save the roast graph as a csv",
             triggered=self.roast.save_roast_graph_csv)
 
-        self.openAboutWindow = QtWidgets.QAction("&About", self,
+        self.openAboutWindow = QtGui.QAction("&About", self,
             statusTip="About openroast",
             triggered=self.open_about_window)
 
@@ -122,7 +123,7 @@ class MainWindow(QtWidgets.QMainWindow):
         # Add spacer to set login button on the right.
         self.spacer = QtWidgets.QWidget()
         self.spacer.setSizePolicy(
-            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+            QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding)
         self.mainToolBar.addWidget(self.spacer)
 
         # Add buttons to array to be disabled on selection.
@@ -196,7 +197,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def open_about_window(self):
         self.aboutWindow = aboutwindow.About()
-        self.aboutWindow.exec_()
+        self.aboutWindow.exec()
 
     def closeEvent(self, event):
         self.roaster.disconnect()
